@@ -5,6 +5,7 @@ squares = [1, 4, 9, 16, 25]
 
 plt.style.use('seaborn-v0_8')
 fig, ax = plt.subplots()
+# 绘制一条连线图，x取值，y取值，连线绘制的粗细
 ax.plot(input_values, squares, linewidth=3)
 
 # 设置图题并给坐标轴加上标签
