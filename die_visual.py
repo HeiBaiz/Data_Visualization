@@ -28,4 +28,7 @@ fig = px.bar(x=poss_results, y=frequencies, title=title, labels=labels)
 # 进一步定制图形
 fig.update_layout(xaxis_dtick=1)
 
+# 生成图像
 fig.show()
+# 保存图像
+#fig.write_html('dice_visual_d6d10.html')
