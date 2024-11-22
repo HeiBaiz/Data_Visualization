@@ -16,9 +16,14 @@ print(f"Complete results: {not response_dict['incomplete_results']}")
 
 # 处理有关仓库的信息
 repo_dicts = response_dict['items']
-repo_names, stars, hover_texts = [], [], []
+repo_links, stars, hover_texts = [], [], []
 for repo_dict in repo_dicts:
-    repo_names.append(repo_dict['name'])
+    # 将仓库名转换为链接
+    repo_name = repo_dict['name']
+    repo_url = repo_dict['html_url']
+    repo_link = f"<a href='{repo_url}'>{repo_name}</a>"
+    repo_links.append(repo_link)
+    
     stars.append(repo_dict['stargazers_count'])
     
     # 创建悬停文本
@@ -30,7 +35,7 @@ for repo_dict in repo_dicts:
 # 可视化
 title = "Most-Starred Python Project on GitHub"
 labels = {'x': 'Repository', 'y': 'Stars'}
-fig = px.bar(x=repo_names, y=stars, title=title, labels=labels,
+fig = px.bar(x=repo_links, y=stars, title=title, labels=labels,
              hover_name=hover_texts)
 
 fig.update_layout(title_font_size=28, xaxis_title_font_size=20,
