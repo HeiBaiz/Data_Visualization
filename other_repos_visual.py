@@ -1,6 +1,8 @@
 import requests
 import plotly.express as px
 from datetime import datetime
+import numpy as np
+import pandas as pd
 
 # 定义要查询的语言列表
 languages = ["JavaScript", "Ruby", "C", "Java", "Perl", "Haskell", "Go"]
@@ -42,8 +44,6 @@ for language in languages:
             f"Last Updated: {updated_date}"
         )
         
-        
-        
         top_repos_dict[language].append({
             'repo_link': repo_link,
             'stars': stars,
@@ -56,13 +56,20 @@ for language in languages:
 # 将所有数据合并到一个列表中
 all_repos = [repo for repos in top_repos_dict.values() for repo in repos]
 
+# 使用 pandas 创建 DataFrame
+df = pd.DataFrame(all_repos)
+
 # 提取数据
-repo_links = [repo['repo_link'] for repo in all_repos]
-stars = [repo['stars'] for repo in all_repos]
-created_dates = [repo['created_at'] for repo in all_repos]
-updated_dates = [repo['updated_at'] for repo in all_repos]
-hover_texts = [repo['hover_text'] for repo in all_repos]
-languages = [repo['language'] for repo in all_repos]
+repo_links = df['repo_link']
+stars = df['stars']
+created_dates = df['created_at']
+updated_dates = df['updated_at']
+hover_texts = df['hover_text']
+languages = df['language']
+
+# 使用 numpy 计算每个语言的平均星标数
+average_stars_per_language = df.groupby('language')['stars'].mean()
+print("Average stars per language:\n", average_stars_per_language)
 
 # 可视化
 title = "Top 3 Projects for Each Language on GitHub"
